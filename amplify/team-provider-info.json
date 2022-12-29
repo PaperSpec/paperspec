@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-paperspec-dev-164139-authRole",
+      "UnauthRoleArn": "arn:aws:iam::622770248247:role/amplify-paperspec-dev-164139-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::622770248247:role/amplify-paperspec-dev-164139-authRole",
+      "Region": "us-west-2",
+      "DeploymentBucketName": "amplify-paperspec-dev-164139-deployment",
+      "UnauthRoleName": "amplify-paperspec-dev-164139-unauthRole",
+      "StackName": "amplify-paperspec-dev-164139",
+      "StackId": "arn:aws:cloudformation:us-west-2:622770248247:stack/amplify-paperspec-dev-164139/8f886d70-8711-11ed-9e65-06e8ffa4bcef",
+      "AmplifyAppId": "d68mjij833vmr"
+    },
+    "categories": {
+      "api": {
+        "paperspec": {}
+      }
+    }
+  }
+}
