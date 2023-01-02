@@ -30,7 +30,7 @@ export 'Spec.dart';
 
 class ModelProvider implements ModelProviderInterface {
   @override
-  String version = "c5e5d327650b8f2d3f075b8f91a6e59c";
+  String version = "35c89c7f901ffe5a238e270b274d7535";
   @override
   List<ModelSchema> modelSchemas = [Component.schema, Source.schema, Spec.schema];
   static final ModelProvider _instance = ModelProvider();

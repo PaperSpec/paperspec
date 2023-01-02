@@ -79,56 +79,20 @@ class Spec extends Model {
     return _description;
   }
   
-  List<double> get amounts {
-    try {
-      return _amounts!;
-    } catch(e) {
-      throw new AmplifyCodeGenModelException(
-          AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
-          recoverySuggestion:
-            AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
-          underlyingException: e.toString()
-          );
-    }
+  List<double>? get amounts {
+    return _amounts;
   }
   
-  List<String> get units {
-    try {
-      return _units!;
-    } catch(e) {
-      throw new AmplifyCodeGenModelException(
-          AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
-          recoverySuggestion:
-            AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
-          underlyingException: e.toString()
-          );
-    }
+  List<String>? get units {
+    return _units;
   }
   
-  List<Component> get components {
-    try {
-      return _components!;
-    } catch(e) {
-      throw new AmplifyCodeGenModelException(
-          AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
-          recoverySuggestion:
-            AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
-          underlyingException: e.toString()
-          );
-    }
+  List<Component>? get components {
+    return _components;
   }
   
-  Source get source {
-    try {
-      return _source!;
-    } catch(e) {
-      throw new AmplifyCodeGenModelException(
-          AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
-          recoverySuggestion:
-            AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
-          underlyingException: e.toString()
-          );
-    }
+  Source? get source {
+    return _source;
   }
   
   TemporalDateTime? get createdAt {
@@ -139,9 +103,9 @@ class Spec extends Model {
     return _updatedAt;
   }
   
-  const Spec._internal({required this.id, required name, creator, year, description, required amounts, required units, required components, required source, createdAt, updatedAt}): _name = name, _creator = creator, _year = year, _description = description, _amounts = amounts, _units = units, _components = components, _source = source, _createdAt = createdAt, _updatedAt = updatedAt;
+  const Spec._internal({required this.id, required name, creator, year, description, amounts, units, components, source, createdAt, updatedAt}): _name = name, _creator = creator, _year = year, _description = description, _amounts = amounts, _units = units, _components = components, _source = source, _createdAt = createdAt, _updatedAt = updatedAt;
   
-  factory Spec({String? id, required String name, String? creator, String? year, String? description, required List<double> amounts, required List<String> units, required List<Component> components, required Source source}) {
+  factory Spec({String? id, required String name, String? creator, String? year, String? description, List<double>? amounts, List<String>? units, List<Component>? components, Source? source}) {
     return Spec._internal(
       id: id == null ? UUID.getUUID() : id,
       name: name,
@@ -255,6 +219,28 @@ class Spec extends Model {
     modelSchemaDefinition.name = "Spec";
     modelSchemaDefinition.pluralName = "Specs";
     
+    modelSchemaDefinition.authRules = [
+      AuthRule(
+        authStrategy: AuthStrategy.GROUPS,
+        groupClaim: "cognito:groups",
+        groups: [ "Admins" ],
+        provider: AuthRuleProvider.USERPOOLS,
+        operations: [
+          ModelOperation.CREATE,
+          ModelOperation.UPDATE,
+          ModelOperation.DELETE,
+          ModelOperation.READ
+        ]),
+      AuthRule(
+        authStrategy: AuthStrategy.GROUPS,
+        groupClaim: "cognito:groups",
+        groups: [ "Users" ],
+        provider: AuthRuleProvider.USERPOOLS,
+        operations: [
+          ModelOperation.READ
+        ])
+    ];
+    
     modelSchemaDefinition.addField(ModelFieldDefinition.id());
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
@@ -283,14 +269,14 @@ class Spec extends Model {
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
       key: Spec.AMOUNTS,
-      isRequired: true,
+      isRequired: false,
       isArray: true,
       ofType: ModelFieldType(ModelFieldTypeEnum.collection, ofModelName: describeEnum(ModelFieldTypeEnum.double))
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
       key: Spec.UNITS,
-      isRequired: true,
+      isRequired: false,
       isArray: true,
       ofType: ModelFieldType(ModelFieldTypeEnum.collection, ofModelName: describeEnum(ModelFieldTypeEnum.string))
     ));
@@ -304,7 +290,7 @@ class Spec extends Model {
     
     modelSchemaDefinition.addField(ModelFieldDefinition.belongsTo(
       key: Spec.SOURCE,
-      isRequired: true,
+      isRequired: false,
       targetNames: ["sourceSpecsId"],
       ofModelName: (Source).toString()
     ));

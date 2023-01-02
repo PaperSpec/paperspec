@@ -189,6 +189,28 @@ class Source extends Model {
     modelSchemaDefinition.name = "Source";
     modelSchemaDefinition.pluralName = "Sources";
     
+    modelSchemaDefinition.authRules = [
+      AuthRule(
+        authStrategy: AuthStrategy.GROUPS,
+        groupClaim: "cognito:groups",
+        groups: [ "Admins" ],
+        provider: AuthRuleProvider.USERPOOLS,
+        operations: [
+          ModelOperation.CREATE,
+          ModelOperation.UPDATE,
+          ModelOperation.DELETE,
+          ModelOperation.READ
+        ]),
+      AuthRule(
+        authStrategy: AuthStrategy.GROUPS,
+        groupClaim: "cognito:groups",
+        groups: [ "Users" ],
+        provider: AuthRuleProvider.USERPOOLS,
+        operations: [
+          ModelOperation.READ
+        ])
+    ];
+    
     modelSchemaDefinition.addField(ModelFieldDefinition.id());
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
