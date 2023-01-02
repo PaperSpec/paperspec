@@ -9,11 +9,23 @@
       "UnauthRoleName": "amplify-paperspec-dev-164139-unauthRole",
       "StackName": "amplify-paperspec-dev-164139",
       "StackId": "arn:aws:cloudformation:us-west-2:622770248247:stack/amplify-paperspec-dev-164139/8f886d70-8711-11ed-9e65-06e8ffa4bcef",
-      "AmplifyAppId": "d68mjij833vmr"
+      "AmplifyAppId": "d68mjij833vmr",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-paperspec-dev-164139-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
     },
     "categories": {
       "api": {
         "paperspec": {}
+      },
+      "auth": {
+        "paperspeca1c77fc3": {},
+        "userPoolGroups": {}
+      },
+      "function": {
+        "paperspeca1c77fc3PostConfirmation": {
+          "GROUP": "Users",
+          "deploymentBucketName": "amplify-paperspec-dev-164139-deployment",
+          "s3Key": "amplify-builds/paperspeca1c77fc3PostConfirmation-343169616d477a365677-build.zip"
+        }
       }
     }
   }

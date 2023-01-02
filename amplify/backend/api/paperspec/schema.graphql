@@ -1,48 +1,64 @@
-# This "input" configures a global authorization rule to enable public access to
-# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
-input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
+## Content of the Paper Spec app includes the following,
+## and data will be queried with this model
 
-type Source @model {
-  id: ID!
+type Source @model @auth(rules: [
+    { allow: groups, groups: ["Admins"]},
+    { allow: groups, groups: ["Users"], operations: [read] }
+  ]) {
   title: String!
   subtitle: String
   authors: [String]!
   specs: [Spec]! @hasMany
+  # price: Float!
 }
 
-type Component @model {
-  id: ID!
+type Component @model @auth(rules: [
+    { allow: groups, groups: ["Admins"] },
+    { allow: groups, groups: ["Users"], operations: [read] }
+  ]) {
   name: String!
   description: String
 }
 
-type Spec @model {
-  id: ID!
+type Spec @model @auth(rules: [
+    { allow: groups, groups: ["Admins"] },
+    { allow: groups, groups: ["Users"], operations: [read] }
+  ]) {
   name: String!
   creator: String
   year: String
   description: String
-  amounts: [Float]!
-  units: [String]!
-  components: [Component]! @hasMany
-  source: Source! @belongsTo
+  amounts: [Float]
+  units: [String]
+  components: [Component] @hasMany
+  source: Source @belongsTo
 }
 
-# type Blog @model {
-#   id: ID!
-#   name: String!
-#   posts: [Post] @hasMany
+# type User @model @auth(rules: [
+#     { allow: owner },
+#     { allow: groups, groups: ["Admins"] }
+#   ]) {
+#   email: String!
+#   # orders: [Order] @hasMany
 # }
 
-# type Post @model {
-#   id: ID!
-#   title: String!
-#   blog: Blog @belongsTo
-#   comments: [Comment] @hasMany
+# type Order @model @auth(rules: [
+#     { allow: owner },
+#     { allow: groups, groups: ["admin"] }
+#   ]) {
+#   customer: Customer! @belongsTo
+#   items: [Item] @hasMany
+#   total: Float
+#   tax: Float
+#   subtotal: Float
 # }
 
-# type Comment @model {
-#   id: ID!
-#   post: Post @belongsTo
-#   content: String!
+# type OrderItem @model @auth(rules: [
+#     { allow: owner },
+#     { allow: groups, groups: ["admin"] }
+#   ]) {
+#   order: Order @belongsTo
+#   source: Source @hasOne
+#   quantity: Int
+#   price: Float
 # }

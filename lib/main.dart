@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 // Amplify Flutter Packages
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
+import 'package:amplify_api/amplify_api.dart';
+import 'package:paperspec/models/ModelProvider.dart';
 
 import 'amplifyconfiguration.dart';
 
@@ -28,7 +30,7 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -65,7 +67,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
     // Add any Amplify plugins you want to use
     final authPlugin = AmplifyAuthCognito();
-    await Amplify.addPlugin(authPlugin);
+    final apiPlugin = AmplifyAPI(modelProvider: ModelProvider.instance);
+
+    await Amplify.addPlugins([
+        authPlugin,
+        apiPlugin
+    ]);
 
     // You can use addPlugins if you are going to be adding multiple plugins
     // await Amplify.addPlugins([authPlugin, analyticsPlugin]);
@@ -76,6 +83,24 @@ class _MyHomePageState extends State<MyHomePage> {
       await Amplify.configure(amplifyconfig);
     } on AmplifyAlreadyConfiguredException {
       safePrint("Tried to reconfigure Amplify; this can occur when your app restarts on Android.");
+    }
+  }
+
+  // Create a Component based on a `name` and `description`
+  Future<void> createTestComponent() async {
+    try {
+      final component = Component(name: "TEST COMPONENT", description: "MSSE: ${DateTime.now().millisecondsSinceEpoch}");
+      final request = ModelMutations.create(component);
+      final response = await Amplify.API.mutate(request: request).response;
+
+      final createdComponent = response.data;
+      if (createdComponent == null) {
+        safePrint('errors: ${response.errors}');
+        return;
+      }
+      safePrint('Mutation result: ${createdComponent.name}');
+    } on ApiException catch (e) {
+      safePrint('Mutation failed: $e');
     }
   }
 
@@ -139,8 +164,8 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
+        onPressed: createTestComponent,
+        tooltip: 'Create Component',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
