@@ -1,5 +1,8 @@
+## Content of the Paper Spec app includes the following,
+## and data will be queried with this model
+
 type Source @model @auth(rules: [
-    { allow: groups, groups: ["Admins"] },
+    { allow: groups, groups: ["Admins"]},
     { allow: groups, groups: ["Users"], operations: [read] }
   ]) {
   title: String!
