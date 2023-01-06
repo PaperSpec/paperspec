@@ -10,6 +10,15 @@
       "StackName": "amplify-paperspec-main-192940",
       "StackId": "arn:aws:cloudformation:us-west-2:622770248247:stack/amplify-paperspec-main-192940/5b574eb0-8d72-11ed-8045-028178a2344b",
       "AmplifyAppId": "d3igg8dl824jrb"
+    },
+    "categories": {
+      "auth": {
+        "paperspeca8f63fe0": {},
+        "userPoolGroups": {}
+      },
+      "api": {
+        "paperspec": {}
+      }
     }
   }
 }

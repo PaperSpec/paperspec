@@ -1,0 +1,32 @@
+type Source @model @auth(rules: [
+    { allow: groups, groups: ["Admins"]},
+    { allow: groups, groups: ["Users"], operations: [read] }
+  ]) {
+  title: String!
+  subtitle: String
+  authors: [String]!
+  specs: [Spec]! @hasMany
+  # price: Float!
+}
+
+type Component @model @auth(rules: [
+    { allow: groups, groups: ["Admins"] },
+    { allow: groups, groups: ["Users"], operations: [read] }
+  ]) {
+  name: String!
+  description: String
+}
+
+type Spec @model @auth(rules: [
+    { allow: groups, groups: ["Admins"] },
+    { allow: groups, groups: ["Users"], operations: [read] }
+  ]) {
+  name: String!
+  creator: String
+  year: String
+  description: String
+  amounts: [Float]
+  units: [String]
+  components: [Component] @hasMany
+  source: Source @belongsTo
+}
