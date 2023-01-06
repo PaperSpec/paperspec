@@ -1,0 +1,22 @@
+version: 1
+backend:
+  phases:
+    build:
+      commands:
+        - amplifyPush --simple
+frontend:
+  phases:
+    build:
+      commands: [
+        'git clone https://github.com/flutter/flutter.git -b stable',
+        'export PATH="$PATH":`pwd`/flutter/bin',
+        'flutter config --enable-web',
+        'flutter pub get',
+        'flutter build web --release'
+      ]
+  artifacts:
+    baseDirectory: /build/web
+    files:
+      - '**/*'
+  cache:
+    paths: []
