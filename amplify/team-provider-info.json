@@ -18,6 +18,12 @@
       },
       "api": {
         "paperspec": {}
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d3igg8dl824jrb",
+          "type": "cicd"
+        }
       }
     }
   }
