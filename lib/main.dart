@@ -1,10 +1,9 @@
-import 'package:flutter/material.dart';
-
+import 'package:amplify_api/amplify_api.dart';
+import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
+import 'package:amplify_authenticator/amplify_authenticator.dart';
 // Amplify Flutter Packages
 import 'package:amplify_flutter/amplify_flutter.dart';
-import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
-import 'package:amplify_api/amplify_api.dart';
-import 'package:amplify_authenticator/amplify_authenticator.dart';
+import 'package:flutter/material.dart';
 // import 'package:amplify_storage_s3/amplify_storage_s3.dart';
 // import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:paperspec/models/ModelProvider.dart';
@@ -35,7 +34,7 @@ class MyApp extends StatelessWidget {
           // or simply save your changes to "hot reload" in a Flutter IDE).
           // Notice that the counter didn't reset back to zero; the application
           // is not restarted.
-          primarySwatch: Colors.green,
+          primarySwatch: Colors.orange,
         ),
         home: const MyHomePage(title: 'Flutter Demo Home Page'),
       ),
@@ -62,7 +61,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   initState() {
     super.initState();
@@ -70,15 +68,11 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<void> _configureAmplify() async {
-
     // Add any Amplify plugins you want to use
     final authPlugin = AmplifyAuthCognito();
     final apiPlugin = AmplifyAPI(modelProvider: ModelProvider.instance);
 
-    await Amplify.addPlugins([
-        authPlugin,
-        apiPlugin
-    ]);
+    await Amplify.addPlugins([authPlugin, apiPlugin]);
 
     // You can use addPlugins if you are going to be adding multiple plugins
     // await Amplify.addPlugins([authPlugin, analyticsPlugin]);
@@ -88,14 +82,17 @@ class _MyHomePageState extends State<MyHomePage> {
     try {
       await Amplify.configure(amplifyconfig);
     } on AmplifyAlreadyConfiguredException {
-      safePrint("Tried to reconfigure Amplify; this can occur when your app restarts on Android.");
+      safePrint(
+          "Tried to reconfigure Amplify; this can occur when your app restarts on Android.");
     }
   }
 
   // Create a Component based on a `name` and `description`
   Future<void> createTestComponent() async {
     try {
-      final component = Component(name: "TEST COMPONENT", description: "MSSE: ${DateTime.now().millisecondsSinceEpoch}");
+      final component = Component(
+          name: "TEST COMPONENT",
+          description: "MSSE: ${DateTime.now().millisecondsSinceEpoch}");
       final request = ModelMutations.create(component);
       final response = await Amplify.API.mutate(request: request).response;
 
@@ -170,8 +167,8 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: createTestComponent,
-        tooltip: 'Create Component',
+        onPressed: _incrementCounter,
+        tooltip: 'Increment Counter',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
