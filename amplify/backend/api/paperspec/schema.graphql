@@ -6,7 +6,6 @@ type Source @model @auth(rules: [
   subtitle: String
   authors: [String]!
   specs: [Spec]! @hasMany
-  # price: Float!
 }
 
 type Component @model @auth(rules: [

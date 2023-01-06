@@ -22,7 +22,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Authenticator(
-      initialStep: AuthenticatorStep.signIn,
       child: MaterialApp(
         builder: Authenticator.builder(),
         title: 'Flutter Demo',
