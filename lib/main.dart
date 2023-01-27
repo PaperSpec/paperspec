@@ -2,7 +2,11 @@ import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:paperspec/home/home.dart';
 import 'package:paperspec/models/ModelProvider.dart';
+import 'package:paperspec/routes.dart';
+import 'package:paperspec/theme.dart';
+import 'package:paperspec/common/loading.dart';
 import 'amplifyconfiguration.dart';
 
 void main() {
@@ -45,16 +49,17 @@ class _AppState extends State<PaperSpecApp> {
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           // TODO: Error screen
-          return Text("Error");
         }
         // Show application once load is complete
-        // TODO: Home screen
         if (snapshot.connectionState == ConnectionState.done) {
-          return MaterialApp();
+          return MaterialApp(
+            routes: appRoutes,
+            theme: appTheme,
+          );
         }
         // Otherwise, show loading screen
         // TODO: Loading screen
-        return Text("Loading...");
+        return const LoadingScreen();
       },
     );
   }
